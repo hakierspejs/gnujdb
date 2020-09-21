@@ -11,7 +11,8 @@ def gen_key():
 
 class Gnuj(models.Model):
     id = models.CharField(primary_key=True, default=gen_key, max_length=10)
-    tytul = models.TextField()
-    wartosc = models.TextField()
-    wlasnosc = models.TextField()
+    image = models.ImageField(upload_to='static/', blank=True)
+    tytul = models.TextField(blank=True)
+    wartosc = models.TextField(blank=True)
+    wlasnosc = models.TextField(blank=True)
     dodatkowe_info = models.TextField(blank=True)

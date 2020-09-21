@@ -20,6 +20,7 @@ class Migration(migrations.Migration):
                 ('wartosc', models.TextField()),
                 ('wlasnosc', models.TextField()),
                 ('dodatkowe_info', models.TextField(blank=True)),
+                ('image', models.ImageField(upload_to='gnujdb/')),
             ],
         ),
     ]

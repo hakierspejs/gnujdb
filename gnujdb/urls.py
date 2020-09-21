@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
+from django.conf.urls.static import static
+from django.conf import settings
 from .views import homePageView, eloView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homePageView, name='home'),
     re_path(r'^[0-9A-HJ-NP-Za-km-z]{10}$', eloView, name='elo')
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

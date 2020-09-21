@@ -1,8 +1,7 @@
-{% for gnuj in gnujs %}
-{{ gnuj.contents }}
-{% endfor %}
-
-<form method="post">{% csrf_token %}
+{% if gnuj.image %}
+<img src="{{ MEDIA_URL }}{{ gnuj.image}}"></img>
+{% endif %}
+<form enctype="multipart/form-data" method="post">{% csrf_token %}
 {{ form.as_p }}
 <input type="submit">
 </form>
