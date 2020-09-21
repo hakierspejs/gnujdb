@@ -5,4 +5,4 @@ from .models import Gnuj
 class GnujForm(ModelForm):
     class Meta:
         model = Gnuj
-        exclude = []
+        exclude = ['id']
