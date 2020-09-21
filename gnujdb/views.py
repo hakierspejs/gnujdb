@@ -19,7 +19,6 @@ def gen_svg():
 
 
 def homePageView(request):
-
     body = '<style>* { padding: 0px; margin: 0px; font-size: 1.5mm}</style><table border=1>'
     for x in range(21):
         body += '<tr>'
