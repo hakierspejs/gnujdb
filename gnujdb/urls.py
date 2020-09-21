@@ -14,10 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from .views import homePageView
+from django.urls import path, re_path
+from .views import homePageView, eloView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', homePageView, name='home')
+    path('', homePageView, name='home'),
+    re_path(r'^[0-9A-HJ-NP-Za-km-z]{10}$', eloView, name='elo')
 ]
