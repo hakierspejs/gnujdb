@@ -31,9 +31,13 @@ def homePageView(request):
 
 
 def eloView(request):
-    gnuj = Gnuj()
-    gnuj.contents = "elo"
-    gnuj.save()
-    gnujs = Gnuj.objects.all()
-    form = GnujForm()
-    return render(request, "index.html", {"gnujs": gnujs, "form": form})
+    k = request.path.split('/')[-1]
+    try:
+        gnuj = Gnuj.objects.get(pk=k)
+    except Gnuj.DoesNotExist:
+        gnuj = Gnuj()
+        gnuj.id = k
+    form = GnujForm(request.POST, instance=gnuj)
+    if form.is_valid() and request.method == 'POST':
+        form.save()
+    return render(request, "index.html", {"form": form})
