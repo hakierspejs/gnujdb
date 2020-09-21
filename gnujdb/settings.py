@@ -55,7 +55,7 @@ ROOT_URLCONF = 'gnujdb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['./gnujdb/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

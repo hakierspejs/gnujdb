@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 from .models import Gnuj
 
@@ -8,4 +8,4 @@ def homePageView(request):
     gnuj.contents = "elo"
     gnuj.save()
     gnujs = Gnuj.objects.all()
-    return HttpResponse(','.join([x.contents for x in gnujs]))
+    return render(request, 'index.html', {'gnujs': gnujs})
