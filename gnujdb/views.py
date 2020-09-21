@@ -37,7 +37,10 @@ def eloView(request):
     except Gnuj.DoesNotExist:
         gnuj = Gnuj()
         gnuj.id = k
-    form = GnujForm(request.POST, instance=gnuj)
-    if form.is_valid() and request.method == 'POST':
-        form.save()
+    if request.method == 'POST':
+        form = GnujForm(request.POST, instance=gnuj)
+        if form.is_valid():
+            form.save()
+    else:
+        form = GnujForm(instance=gnuj)
     return render(request, "index.html", {"form": form})
