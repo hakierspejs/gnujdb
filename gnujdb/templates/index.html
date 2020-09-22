@@ -1,5 +1,7 @@
 {% if gnuj.image %}
-<img src="{{ MEDIA_URL }}{{ gnuj.image}}"></img>
+<a href="{{ MEDIA_URL }}{{ gnuj.image}}">
+    <img style="max-width: 300px; max-height: 300px" src="{{ MEDIA_URL }}{{ gnuj.image}}"></img>
+</a>
 {% endif %}
 <form enctype="multipart/form-data" method="post">{% csrf_token %}
 {{ form.as_p }}
