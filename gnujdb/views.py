@@ -55,6 +55,14 @@ def createQrCodesView(request):
     return HttpResponse(body)
 
 
+def dumpDbView(request):
+    test_file = open('db.sqlite3', 'rb')
+    response = HttpResponse(content=test_file)
+    response['Content-Type'] = 'application/x-sqlite3'
+    response['Content-Disposition'] = 'attachment; filename="db.sqlite"'
+    return response
+
+
 def displayFormView(request):
     k = request.path.split("/")[-1]
     try:
