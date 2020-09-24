@@ -1,6 +1,6 @@
 import io
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.conf import settings
 
@@ -11,25 +11,43 @@ import qrcode
 import qrcode.image.svg
 
 
-def gen_svg():
+def gen_svg(box_size):
     bio = io.BytesIO()
     k = gen_key()
     url = "https://g.hs-ldz.pl/" + k
     qrcode.make(
-        url, image_factory=qrcode.image.svg.SvgPathImage, border=0, box_size=3
+        url,
+        image_factory=qrcode.image.svg.SvgPathImage,
+        border=0,
+        box_size=box_size,
     ).save(bio)
     return k, bio.getvalue().decode()
 
 
-def createQrCodesView(request):
-    body = (
-        "<style>* { padding: 0px; margin: 0px; font-size: 1.5mm}"
-        "</style><table border=1>"
+def showStatisticsView(request):
+    q = Gnuj.objects.all()
+    return HttpResponse(
+        f"Registered {len(q)} objects. TODO: display a list."
+        '<p>You can create new stickers <a href="/create">here<a>.</p>'
     )
-    for x in range(21):
+
+
+def createQrCodesView(request):
+    if "num_rows" not in request.GET:
+        return redirect("/create?num_rows=4&num_columns=3&box_size=16")
+    num_rows = int(request.GET.get("num_rows", 21))
+    num_columns = int(request.GET.get("num_columns", 18))
+    box_size = int(request.GET.get("box_size", 3))
+    body = (
+        "<style>* { font-family: monospace; padding: 0px; margin: 0px; "
+        f"font-size: {box_size/2.0}mm"
+        " }</style><table border=1>"
+    )
+
+    for x in range(num_rows):
         body += "<tr>"
-        for y in range(18):
-            k, svg = gen_svg()
+        for y in range(num_columns):
+            k, svg = gen_svg(box_size)
             body += "<td>" + svg + "<p>" + k + "</td>"
         body += "</tr>"
     return HttpResponse(body)
