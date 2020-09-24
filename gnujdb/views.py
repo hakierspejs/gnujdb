@@ -21,7 +21,7 @@ def gen_svg():
     return k, bio.getvalue().decode()
 
 
-def homePageView(request):
+def createQrCodesView(request):
     body = (
         "<style>* { padding: 0px; margin: 0px; font-size: 1.5mm}"
         "</style><table border=1>"
@@ -35,7 +35,7 @@ def homePageView(request):
     return HttpResponse(body)
 
 
-def eloView(request):
+def displayFormView(request):
     k = request.path.split("/")[-1]
     try:
         gnuj = Gnuj.objects.get(pk=k)
