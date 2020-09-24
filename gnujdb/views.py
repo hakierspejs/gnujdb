@@ -28,7 +28,9 @@ def showStatisticsView(request):
     q = Gnuj.objects.all()
     return HttpResponse(
         f"Registered {len(q)} objects. TODO: display a list."
-        '<p>You can create new stickers <a href="/create">here<a>.</p>'
+        "<p>You can create new stickers by printing "
+        '<a href="/create">this page<a>. Play with URL to change size '
+        "and number of stickers!</p>"
     )
 
 
