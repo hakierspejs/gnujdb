@@ -27,7 +27,9 @@ def gen_svg(box_size):
 def showStatisticsView(request):
     q = Gnuj.objects.all()
     return HttpResponse(
-        f"Registered {len(q)} objects. TODO: display a list."
+        f"<p>Registered {len(q)} objects."
+        "You can download SQLite dump <a href=/dump>here</a>. </p>"
+        '<p><a href="https://g.hs-ldz.pl/5F1vJ66Eic">Example form</a></p>'
         "<p>You can create new stickers by printing "
         '<a href="/create">this page<a>. Play with URL to change size '
         "and number of stickers!</p>"
