@@ -1,12 +1,19 @@
 import os
+import re
 
 from django.db import models
 
 import base58
 
 
+GNUJDB_KEY_REGEX = r"^[0-9A-HJ-NP-Za-km-z]{10}$"
+GNUJDB_KEY_REGEX_COMPILED = re.compile(GNUJDB_KEY_REGEX)
+
 def gen_key():
-    return base58.b58encode(os.getrandom(7)).decode()
+    ret = ''
+    while not GNUJDB_KEY_REGEX_COMPILED.match(ret):
+        ret = base58.b58encode(os.getrandom(7)).decode()
+    return ret
 
 
 class Gnuj(models.Model):

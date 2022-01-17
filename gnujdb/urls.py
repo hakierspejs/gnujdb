@@ -24,10 +24,14 @@ from .views import (
     dumpDbView,
 )
 
+
+from gnujdb.models import GNUJDB_KEY_REGEX
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", showStatisticsView, name="statistics"),
     path("create", createQrCodesView, name="create_qr_codes"),
     path("dump", dumpDbView, name="dump_database"),
-    re_path(r"^[0-9A-HJ-NP-Za-km-z]{10}$", displayFormView, name="form"),
+    re_path(GNUJDB_KEY_REGEX, displayFormView, name="form"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
