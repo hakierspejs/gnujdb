@@ -26,10 +26,12 @@ def gen_svg(box_size):
 
 def showStatisticsView(request):
     q = Gnuj.objects.all()
+    k = gen_key()
     return HttpResponse(
         f"<p>Registered {len(q)} objects."
         "You can download SQLite dump <a href=/dump>here</a>. </p>"
-        '<p><a href="https://g.hs-ldz.pl/5F1vJ66Eic">Example form</a></p>'
+        '<p><a href="https://g.hs-ldz.pl/5F1vJ66Eic">Example form</a> || '
+        f'<a href="https://g.hs-ldz.pl/{k}">Add new object</a></p>'
         "<p>You can create new stickers by printing "
         '<a href="/create">this page<a>. Play with URL to change size '
         "and number of stickers!</p>"
