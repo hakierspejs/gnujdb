@@ -22,6 +22,7 @@ from .views import (
     displayFormView,
     showStatisticsView,
     dumpDbView,
+    searchView,
 )
 
 
@@ -33,5 +34,6 @@ urlpatterns = [
     path("", showStatisticsView, name="statistics"),
     path("create", createQrCodesView, name="create_qr_codes"),
     path("dump", dumpDbView, name="dump_database"),
+    path("search", searchView, name="searchView"),
     re_path(GNUJDB_KEY_REGEX, displayFormView, name="form"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
