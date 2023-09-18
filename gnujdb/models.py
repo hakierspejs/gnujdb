@@ -23,3 +23,4 @@ class Gnuj(models.Model):
     wartosc = models.TextField(blank=True)
     wlasnosc = models.TextField(blank=True)
     dodatkowe_info = models.TextField(blank=True)
+    last_updated = models.DateTimeField(auto_now=True, null=True)

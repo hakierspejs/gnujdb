@@ -130,3 +130,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media'
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
+
+CSRF_TRUSTED_ORIGINS = ['https://g.hs-ldz.pl']

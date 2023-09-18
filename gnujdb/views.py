@@ -11,6 +11,7 @@ from .forms import GnujForm
 
 import qrcode
 import qrcode.image.svg
+import requests
 
 
 def gen_svg(box_size):
@@ -27,19 +28,14 @@ def gen_svg(box_size):
 
 
 def showStatisticsView(request):
-    q = Gnuj.objects.all()
-    k = gen_key()
-    return HttpResponse(
-        f"<p>Registered {len(q)} objects."
-        "You can download SQLite dump <a href=/dump>here</a>. </p>"
-        '<p><a href="https://g.hs-ldz.pl/5F1vJ66Eic">Example form</a> || '
-        f'<a href="https://g.hs-ldz.pl/{k}">Add new object</a></p>'
-        '<p><form action="/search"><input name="query">'
-        '<input type="submit" value="Search"></p></form>'
-        "<p>You can create new stickers by printing "
-        '<a href="/create">this page<a>. Play with URL to change size '
-        "and number of stickers!</p>"
+    items_count = Gnuj.objects.count()
+    new_key = gen_key()
+    return render(
+        request,
+        "main.html",
+        {"new_key": new_key, "items_count": items_count, "MEDIA_URL": settings.MEDIA_URL},
     )
+
 
 
 def createQrCodesView(request):
@@ -78,6 +74,17 @@ def displayFormView(request):
     except Gnuj.DoesNotExist:
         gnuj = Gnuj()
         gnuj.id = k
+    if "drukuj" in request.POST:
+        response = requests.get('https://tpng.hs-ldz.pl/mpd2/')
+        url = response.url
+        payload = {
+            'kopii': '1',
+            'opis': request.POST.get('tytul', ''),
+            'k': k,
+            'wlasnosc': request.POST.get('wlasnosc', '')
+        }
+        response = requests.post(url, data=payload)
+        return HttpResponse(response.text)
     if request.method == "POST":
         form = GnujForm(request.POST, request.FILES, instance=gnuj)
         if form.is_valid():
@@ -108,3 +115,17 @@ def searchView(request):
     for obj in objects[:30]:
         ret += '<li><a href="/' + obj.id + '">' + obj.tytul + "</a></li>"
     return HttpResponse(ret)
+
+
+def swiezyGnuj(request):
+    limit = 20
+    try:
+        limit = int(request.GET['limit'])
+    except Exception as e:
+        pass
+    gnuj = Gnuj.objects.order_by('-last_updated')[:limit]
+    return render(
+        request,
+        "swiezy.html",
+        {"gnuj": gnuj, "MEDIA_URL": settings.MEDIA_URL},
+    )

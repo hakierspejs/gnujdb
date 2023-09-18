@@ -23,6 +23,7 @@ from .views import (
     showStatisticsView,
     dumpDbView,
     searchView,
+    swiezyGnuj,
 )
 
 
@@ -35,5 +36,6 @@ urlpatterns = [
     path("create", createQrCodesView, name="create_qr_codes"),
     path("dump", dumpDbView, name="dump_database"),
     path("search", searchView, name="searchView"),
+    path("swiezygnuj", swiezyGnuj, name="swiezyGnuj"),
     re_path(GNUJDB_KEY_REGEX, displayFormView, name="form"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
