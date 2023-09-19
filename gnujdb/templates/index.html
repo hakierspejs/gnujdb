@@ -1,20 +1,21 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
-	<meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+{% extends "base.html" %}
 
-    </head>
-    <body>
-        {% if gnuj.image %}
-        <a href="{{ MEDIA_URL }}{{ gnuj.image}}">
-            <img style="max-width: 500px; max-height: 500px" src="{{ MEDIA_URL }}{{ gnuj.image}}"></img>
-        </a>
-        {% endif %}
-        <form enctype="multipart/form-data" method="post">{% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit">
-            <input type="submit" value="Drukuj" name="drukuj">
-	    <a href="/">HOME</a>
-        </form>
-    </body>
-</html>
+{% block content %}
+				<p>Registered {{items_count}} objects.You can download SQLite dump <a href=/dump>here</a>. </p>
+				<p>
+								<a href="{% url 'swiezyGnuj' %}">swiezy</a>
+				</p>
+				<p>
+								<a href="https://g.hs-ldz.pl/5F1vJ66Eic">Example form</a> || 
+				</p>
+				<p>
+								<form action="/search"><input name="query"><input type="submit" value="Search"></form>
+				</p>
+				<p>
+								<a href="https://g.hs-ldz.pl/{{new_key}}">Add new object</a>
+				</p>
+				<p>
+								You can create new stickers by printing <a href="/create">this page<a>. 
+								Play with URL to change size and number of stickers!
+				</p>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block head %}
+				{% if gnuj %}
+								{% with item=gnuj.0 %}
+												<meta property="og:title" content="{{ item.tytul }}" />
+												<meta property="og:image" content="https://hssi.hs-ldz.pl/200x,q50/https://g.hs-ldz.pl{{ MEDIA_URL }}{{ item.image}}" />
+								{% endwith %}
+				{% endif %}
+{% endblock %}
+
+{% block content %}
+				{% for item in gnuj %}
+								<a href="/{{ item.id }}">
+								{% if item.image %}
+												<img style="max-width: 300px; max-height: 300px" src="https://hssi.hs-ldz.pl/200x,q50/https://g.hs-ldz.pl{{ MEDIA_URL }}{{ item.image}}"></img>
+								{% endif %}
+								<span >{{ item.tytul }}</span>
+								</a>
+						<br/>
+				{% endfor %}
+						<a href="/">HOME</a>
+{% endblock %}
