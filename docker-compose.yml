@@ -1,12 +1,19 @@
 version: '3.0'
+
+networks:
+  default:
+    name: traefik
+    external: true
+
 services:
     gnujdb:
         build: .
         restart: unless-stopped
         volumes:
             - /mnt/vdb1/d33tah/gnujdb/media:/media
-            - /mnt/vdb1/d33tah/gnujdb/db.sqlite3:/db.sqlite3
-        network_mode: bridge
+            - type: bind
+              source: ./db.sqlite3
+              target: /db.sqlite3
         labels:
             traefik.http.routers.g-https.entrypoints: websecure
             traefik.http.routers.g-https.rule: Host(`g.hs-ldz.pl`)

@@ -32,7 +32,7 @@ def showStatisticsView(request):
     new_key = gen_key()
     return render(
         request,
-        "main.html",
+        "index.html",
         {"new_key": new_key, "items_count": items_count, "MEDIA_URL": settings.MEDIA_URL},
     )
 
@@ -93,7 +93,7 @@ def displayFormView(request):
         form = GnujForm(instance=gnuj)
     return render(
         request,
-        "index.html",
+        "form.html",
         {"form": form, "gnuj": gnuj, "MEDIA_URL": settings.MEDIA_URL},
     )
 
@@ -111,10 +111,12 @@ def searchView(request):
         key=lambda obj: matcher.set_seq2(obj.tytul.lower()) or matcher.ratio(),
         reverse=True,
     )
-    ret = "<ul>"
-    for obj in objects[:30]:
-        ret += '<li><a href="/' + obj.id + '">' + obj.tytul + "</a></li>"
-    return HttpResponse(ret)
+    gnuj = objects[:20]
+    return render(
+        request,
+        "search.html",
+        {"gnuj": gnuj, "MEDIA_URL": settings.MEDIA_URL},
+    )
 
 
 def swiezyGnuj(request):

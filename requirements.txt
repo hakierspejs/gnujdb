@@ -2,3 +2,4 @@ django
 base58
 qrcode
 pillow
+requests

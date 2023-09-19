@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block head %}
+				{% if gnuj %}
+								<meta property="og:title" content="{% for item in gnuj|slice:":4" %}{{ item.tytul }}&#10;{% endfor %}" />
+								{% for item in gnuj|slice:":1" %}
+												{% if item.image %}
+																<meta property="og:image" content="https://g.hs-ldz.pl{{ MEDIA_URL }}{{ item.image}}" /> 
+												{% endif %}
+								{% endfor %}
+				{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<form action="/search"><input name="query"><input type="submit" value="Search"></form>
+</br>
+				{% for item in gnuj %}
+								<a href="/{{ item.id }}">
+								{% if item.image %}
+												<img style="max-width: 300px; max-height: 300px" src="https://hssi.hs-ldz.pl/200x,q50/https://g.hs-ldz.pl{{ MEDIA_URL }}{{ item.image}}"></img>
+								{% endif %}
+								<span >{{ item.tytul }}</span>
+								</a>
+						<br/>
+				{% endfor %}
+						<a href="/">HOME</a>
+{% endblock %}
+
