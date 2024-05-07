@@ -100,18 +100,24 @@ def displayFormView(request):
 
 @csrf_exempt
 def searchView(request):
-    arg = request.GET.get("query").lower()
-    if arg is None:
+    search_query = request.GET.get("query").lower()
+    try:
+        rpp = int(request.GET.get("rpp").lower())
+    except Exception as e:
+        rpp = 40
+    if search_query is None:
         return HttpResponse(
             """<form><input name="query"><input type="submit">"""
         )
-    objects = list(Gnuj.objects.all())
-    matcher = SequenceMatcher(a=arg)
-    objects.sort(
-        key=lambda obj: matcher.set_seq2(obj.tytul.lower()) or matcher.ratio(),
-        reverse=True,
-    )
-    gnuj = objects[:20]
+    search_query += '*'
+    # https://sqlite.org/fts5.html
+    result = Gnuj.objects.raw("""
+        SELECT * from gnujdb_gnuj as Gnuj 
+            JOIN gnujdb_gnuj_fts_idx(%s) as FTS 
+                ON Gnuj.rowid=FTS.rowid 
+        order by FTS.rank
+    """, [search_query])[:rpp]
+    gnuj = list(result)
     return render(
         request,
         "search.html",

@@ -1,11 +1,12 @@
 #!/bin/bash
+PROJPATH=/opt/hsl-services/gnujdb
 if [ "`hostname`" == "hsldz" ]; then
-    chown -R d33tah:d33tah /home/d33tah/workspace/hs/gnujdb
-    cd /home/d33tah/workspace/hs/gnujdb && docker-compose build
-    cd /home/d33tah/workspace/hs/gnujdb && docker-compose up -d
+    cd $PROJPATH && docker-compose build
+    cd $PROJPATH && docker-compose up -d
 else
-    rsync -ra --progress --exclude ".git" --exclude "db.sqlite3" --exclude "deploy.sh" --exclude "media/" ./* root@hs-ldz.pl:/home/d33tah/workspace/hs/gnujdb/
-    ssh root@hs-ldz.pl "chown -R d33tah:d33tah /home/d33tah/workspace/hs/gnujdb"
-    ssh root@hs-ldz.pl "cd /home/d33tah/workspace/hs/gnujdb && docker-compose build"
-    ssh root@hs-ldz.pl "cd /home/d33tah/workspace/hs/gnujdb && docker-compose up -d"
+    mkdir backup
+    scp root@hs-ldz.pl:$PROJPATH/db.sqlite3 ./backup/db.$(date +%Y-%m-%d).$(date +%s).sqlite3
+    rsync -ra --progress --exclude ".git" --exclude "db.sqlite3" --exclude "deploy.sh" --exclude "media/" ./* root@hs-ldz.pl:$PROJPATH/
+    ssh root@hs-ldz.pl "cd $PROJPATH && docker compose build"
+    ssh root@hs-ldz.pl "cd $PROJPATH && docker compose up -d"
 fi
