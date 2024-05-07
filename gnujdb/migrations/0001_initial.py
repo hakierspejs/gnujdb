@@ -8,19 +8,26 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Gnuj',
+            name="Gnuj",
             fields=[
-                ('id', models.CharField(default=gnujdb.models.gen_key, max_length=10, primary_key=True, serialize=False)),
-                ('tytul', models.TextField()),
-                ('wartosc', models.TextField()),
-                ('wlasnosc', models.TextField()),
-                ('dodatkowe_info', models.TextField(blank=True)),
-                ('image', models.ImageField(upload_to='gnujdb/')),
+                (
+                    "id",
+                    models.CharField(
+                        default=gnujdb.models.gen_key,
+                        max_length=10,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("tytul", models.TextField()),
+                ("wartosc", models.TextField()),
+                ("wlasnosc", models.TextField()),
+                ("dodatkowe_info", models.TextField(blank=True)),
+                ("image", models.ImageField(upload_to="gnujdb/")),
             ],
         ),
     ]

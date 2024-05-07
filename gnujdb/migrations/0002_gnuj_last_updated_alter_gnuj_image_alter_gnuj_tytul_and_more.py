@@ -6,33 +6,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('gnujdb', '0001_initial'),
+        ("gnujdb", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='gnuj',
-            name='last_updated',
+            model_name="gnuj",
+            name="last_updated",
             field=models.DateTimeField(auto_now=True, null=True),
         ),
         migrations.AlterField(
-            model_name='gnuj',
-            name='image',
-            field=models.ImageField(blank=True, upload_to='static/'),
+            model_name="gnuj",
+            name="image",
+            field=models.ImageField(blank=True, upload_to="static/"),
         ),
         migrations.AlterField(
-            model_name='gnuj',
-            name='tytul',
+            model_name="gnuj",
+            name="tytul",
             field=models.TextField(blank=True),
         ),
         migrations.AlterField(
-            model_name='gnuj',
-            name='wartosc',
+            model_name="gnuj",
+            name="wartosc",
             field=models.TextField(blank=True),
         ),
         migrations.AlterField(
-            model_name='gnuj',
-            name='wlasnosc',
+            model_name="gnuj",
+            name="wlasnosc",
             field=models.TextField(blank=True),
         ),
     ]

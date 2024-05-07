@@ -33,9 +33,12 @@ def showStatisticsView(request):
     return render(
         request,
         "index.html",
-        {"new_key": new_key, "items_count": items_count, "MEDIA_URL": settings.MEDIA_URL},
+        {
+            "new_key": new_key,
+            "items_count": items_count,
+            "MEDIA_URL": settings.MEDIA_URL,
+        },
     )
-
 
 
 def createQrCodesView(request):
@@ -60,10 +63,10 @@ def createQrCodesView(request):
 
 
 def dumpDbView(request):
-    test_file = open('db.sqlite3', 'rb')
+    test_file = open("db.sqlite3", "rb")
     response = HttpResponse(content=test_file)
-    response['Content-Type'] = 'application/x-sqlite3'
-    response['Content-Disposition'] = 'attachment; filename="db.sqlite"'
+    response["Content-Type"] = "application/x-sqlite3"
+    response["Content-Disposition"] = 'attachment; filename="db.sqlite"'
     return response
 
 
@@ -75,13 +78,13 @@ def displayFormView(request):
         gnuj = Gnuj()
         gnuj.id = k
     if "drukuj" in request.POST:
-        response = requests.get('https://tpng.hs-ldz.pl/mpd2/')
+        response = requests.get("https://tpng.hs-ldz.pl/mpd2/")
         url = response.url
         payload = {
-            'kopii': '1',
-            'opis': request.POST.get('tytul', ''),
-            'k': k,
-            'wlasnosc': request.POST.get('wlasnosc', '')
+            "kopii": "1",
+            "opis": request.POST.get("tytul", ""),
+            "k": k,
+            "wlasnosc": request.POST.get("wlasnosc", ""),
         }
         response = requests.post(url, data=payload)
         return HttpResponse(response.text)
@@ -109,14 +112,17 @@ def searchView(request):
         return HttpResponse(
             """<form><input name="query"><input type="submit">"""
         )
-    search_query += '*'
+    search_query += "*"
     # https://sqlite.org/fts5.html
-    result = Gnuj.objects.raw("""
+    result = Gnuj.objects.raw(
+        """
         SELECT * from gnujdb_gnuj as Gnuj 
             JOIN gnujdb_gnuj_fts_idx(%s) as FTS 
                 ON Gnuj.rowid=FTS.rowid 
         order by FTS.rank
-    """, [search_query])[:rpp]
+    """,
+        [search_query],
+    )[:rpp]
     gnuj = list(result)
     return render(
         request,
@@ -128,10 +134,10 @@ def searchView(request):
 def swiezyGnuj(request):
     limit = 20
     try:
-        limit = int(request.GET['limit'])
+        limit = int(request.GET["limit"])
     except Exception as e:
         pass
-    gnuj = Gnuj.objects.order_by('-last_updated')[:limit]
+    gnuj = Gnuj.objects.order_by("-last_updated")[:limit]
     return render(
         request,
         "swiezy.html",
