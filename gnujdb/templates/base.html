@@ -6,12 +6,25 @@
 				{% block head %}{% endblock %}
 </head>
 <body>
+<style>
+.button {margin: 0 10px}
+</style>
 				<div>
-								<a href="/">HOME</a> </br>
+								<a class="button" href="/">HOME</a>
+								<a class="button" style="background-color: #ffaf16" href="https://g.hs-ldz.pl/{{new_key}}">ADD</a>
+								<a style="float: right" class="button" href="/admin/">LOGIN</a>
 				</div>
 				<div>
+								<p>
 						{% block content %}
 						{% endblock %}
+								</p>
+				</div>
+				<div>
+								</hr>
+								<a class="button" href="/">HOME</a>
+								<a class="button" style="background-color: #ffaf16" href="https://g.hs-ldz.pl/{{new_key}}">ADD</a>
+								<a class="button" style="background-color: #161aff" href="{% url 'swiezyGnuj' %}">SWIEZY</a>
 				</div>
 </body>
 </html>

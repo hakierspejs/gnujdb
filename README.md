@@ -16,3 +16,10 @@ any other extra information. The data can then be viewed and edited by anyone
 who either has an access to the link or the sticker. If the sticker wears off,
 the text below it says what should be entered after https://g.hs-ldz.pl/
 prefix.
+
+TODO: 
+ - SSO login into django-admin
+ - tesseract to parse text on images and add data to fts 
+ - multiple images for item
+ - images proxying + caching + cropping
+

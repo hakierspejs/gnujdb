@@ -13,17 +13,40 @@
 
 
 {% block content %}
-<form action="/search"><input name="query"><input type="submit" value="Search"></form>
+				<p>
+								<form action="/search">
+												<label for="query">FTS over gnuj (<a href="https://sqlite.org/fts5.html#full_text_query_syntax">docs</a>):</label>
+												<input name="query" placeholder="mosfet" value="{{ search_query}}">
+												<input type="submit" value="Search">
+								</form>
+				</p>
 </br>
 				{% for item in gnuj %}
+				<p>
 								<a href="/{{ item.id }}">
-								{% if item.image %}
-												<img style="max-width: 300px; max-height: 300px" src="https://hssi.hs-ldz.pl/200x,q50/https://g.hs-ldz.pl{{ MEDIA_URL }}{{ item.image}}"></img>
-								{% endif %}
 								<span >{{ item.tytul }}</span>
+								<br/>
+								{% if item.image %}
+												<img style="max-width: 300px; max-height: 300px" src="https://hssi.hs-ldz.pl/200x,q60/https://g.hs-ldz.pl{{ MEDIA_URL }}{{ item.image}}"></img>
+								{% endif %}
 								</a>
-						<br/>
+				</p>
 				{% endfor %}
-						<a href="/">HOME</a>
+				{% if not gnuj %}
+				<p>nie znaleziono nic</p>
+								{% if search_query|last not in '*' %}
+								<p> Hint: sproboj dodac gwiazdke na koncu slowa</p>
+								{% endif %}
+				<p style="margin: 0 10px">
+				<a href="https://sqlite.org/fts5.html#full_text_query_syntax"> FTS syntax.</a>
+				Examples:
+				<pre>palnik
+palnik*
+zetaw+gwintownikow
+zest*+gwint*</pre>
+				</p>
+				{% endif %}
+
+				
 {% endblock %}
 

@@ -12,6 +12,7 @@ from .forms import GnujForm
 import qrcode
 import qrcode.image.svg
 import requests
+from datetime import datetime
 
 
 def gen_svg(box_size):
@@ -66,7 +67,8 @@ def dumpDbView(request):
     test_file = open("db.sqlite3", "rb")
     response = HttpResponse(content=test_file)
     response["Content-Type"] = "application/x-sqlite3"
-    response["Content-Disposition"] = 'attachment; filename="db.sqlite"'
+    filename = "gnujdb.{:%Y.%m.%d}.sqlite3".format(datetime.now())
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
     return response
 
 
@@ -112,22 +114,23 @@ def searchView(request):
         return HttpResponse(
             """<form><input name="query"><input type="submit">"""
         )
-    search_query += "*"
-    # https://sqlite.org/fts5.html
-    result = Gnuj.objects.raw(
-        """
-        SELECT * from gnujdb_gnuj as Gnuj 
-            JOIN gnujdb_gnuj_fts_idx(%s) as FTS 
-                ON Gnuj.rowid=FTS.rowid 
-        order by FTS.rank
-    """,
-        [search_query],
-    )[:rpp]
-    gnuj = list(result)
+    gnuj = []
+    if search_query:
+        # https://sqlite.org/fts5.html
+        result = Gnuj.objects.raw(
+            """
+            SELECT * from gnujdb_gnuj as Gnuj 
+                JOIN gnujdb_gnuj_fts_idx(%s) as FTS 
+                    ON Gnuj.rowid=FTS.rowid 
+            order by FTS.rank
+        """,
+            [search_query],
+        )[:rpp]
+        gnuj = list(result)
     return render(
         request,
         "search.html",
-        {"gnuj": gnuj, "MEDIA_URL": settings.MEDIA_URL},
+        {"gnuj": gnuj, "search_query": search_query, "MEDIA_URL": settings.MEDIA_URL},
     )
 
 

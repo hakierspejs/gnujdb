@@ -11,13 +11,13 @@
 
 {% block content %}
 				{% for item in gnuj %}
-								<a href="/{{ item.id }}">
+				<p>
+				<a href="/{{ item.id }}">{{ item.tytul }}</a><br/>
 								{% if item.image %}
-												<img style="max-width: 300px; max-height: 300px" src="https://hssi.hs-ldz.pl/200x,q50/https://g.hs-ldz.pl{{ MEDIA_URL }}{{ item.image}}"></img>
-								{% endif %}
-								<span >{{ item.tytul }}</span>
+								<a href="/{{ item.id }}">
+												<img style="max-width: 200px; max-height: 200px" src="https://hssi.hs-ldz.pl/200x,q50/https://g.hs-ldz.pl{{ MEDIA_URL }}{{ item.image}}"></img>
 								</a>
-						<br/>
+								{% endif %}
+				</p>
 				{% endfor %}
-						<a href="/">HOME</a>
 {% endblock %}

@@ -1,19 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+				<p>
+								<form action="/search">
+												<label for="query">FTS over gnuj (<a href="https://sqlite.org/fts5.html#full_text_query_syntax">docs</a>):</label>
+												<input name="query" placeholder="zesta*">
+												<input type="submit" value="Search">
+								</form>
+				</p>
+</br>
+				</hr>
 				<p>Registered {{items_count}} objects.You can download SQLite dump <a href=/dump>here</a>. </p>
-				<p>
-								<a href="{% url 'swiezyGnuj' %}">swiezy</a>
-				</p>
-				<p>
-								<a href="https://g.hs-ldz.pl/5F1vJ66Eic">Example form</a> || 
-				</p>
-				<p>
-								<form action="/search"><input name="query"><input type="submit" value="Search"></form>
-				</p>
-				<p>
-								<a href="https://g.hs-ldz.pl/{{new_key}}">Add new object</a>
-				</p>
 				<p>
 								You can create new stickers by printing <a href="/create">this page<a>. 
 								Play with URL to change size and number of stickers!
